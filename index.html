@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8" />
+
+    <link href="https://cdn.syncfusion.com/ej2/29.1.33/tailwind3.css" rel="stylesheet">
+    <script src="https://cdn.polyfill.io/v2/polyfill.min.js"></script>
+
+    <style>
+        .status {
+            color: rgb(255, 253, 240);
+            padding: 4px 10px;
+            border-radius: 7px;
+            font-size: 12px;
+        }
+
+        .employee-cell {
+            padding: 8px 10px;
+        }
+
+        .employee-content {
+            display: flex;
+            align-items: center;
+        }
+
+        .employee-img {
+            border-radius: 50%;
+            margin-right: 10px;
+            width: 30px;
+            height: 30px;
+        }
+
+        .employee-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .employee-name {
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .employee-title {
+            font-size: 10px;
+            color: gray;
+        }
+
+        .flag-container {
+            display: inline-block;
+        }
+
+        .flag-img {
+            width: 20px;
+            height: 15px;
+            vertical-align: middle;
+        }
+
+        .flag-text {
+            display: inline-block;
+            padding-left: 4px;
+            vertical-align: middle;
+        }
+
+        .email-cell {
+            padding: 8px 10px;
+        }
+
+        .email-link {
+            text-decoration: none;
+            color: #0078D7;
+            font-size: 13px;
+            background-color: #f3f2f1;
+            padding: 4px 8px;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .status-cell {
+            padding: 8px 10px;
+        }
+
+        .header-icon {
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .viewer-label {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .viewer-container {
+            margin: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <script id="employeetemplate" type="text/x-template">
+        <td class="employee-cell border">
+            <div class="employee-content">
+                <img src="../demo/images/${FullName}.png" alt="${FullName}" class="employee-img" />
+                <div class="employee-info">
+                    <span class="employee-name">${Employee}</span>
+                    <span class="employee-title">${JobTitle}</span>
+                </div>
+            </div>
+        </td>
+    </script>
+
+    <script id="flagtemplate" type="text/x-template">
+        <div class="flag-container">
+            <img src="https://ej2.syncfusion.com/demos/src/tree-grid/images/${Location}.png" class="flag-img" alt="${name}" />
+        </div>
+        <div class="flag-text">${Location}</div>
+    </script>
+
+    <script id="emailtemplate" type="text/x-template">
+        <td class="email-cell border">
+            <a href="mailto:${Email}" class="email-link">✉</a>
+        </td>
+    </script>
+
+    <script id="statustemplate" type="text/x-template">
+        <td class="status-cell border">
+            <span class="status" style="background-color: ${StatusColor};">${Status}</span>
+        </td>
+    </script>
+
+    <script id="contactHeaderTemplate" type="text/x-template">
+        <span class="header-icon">📞 Contact</span>
+    </script>
+
+    <script id="emailHeaderTemplate" type="text/x-template">
+        <span class="header-icon">✉ Email</span>
+    </script>
+
+    <script id="ageHeaderTemplate" type="text/x-template">
+        <span class="header-icon">👶 Age</span>
+    </script>
+    
+    <script id="workModeHeaderTemplate" type="text/x-template">
+        <span class="header-icon">🛠️ Work Mode</span>
+    </script>
+
+    <script id="idHeaderTemplate" type="text/x-template">
+        <span class="header-icon"># ID</span>
+    </script>
+
+    <script id="employeeHeaderTemplate" type="text/x-template">
+        <span class="header-icon">👤 Employee</span>
+    </script>
+
+    <script id="departmentHeaderTemplate" type="text/x-template">
+        <span class="header-icon">💼 Department</span>
+    </script>
+
+    <script id="locationHeaderTemplate" type="text/x-template">
+        <span class="header-icon">📍 Location</span>
+    </script>
+
+    <script id="joinDateHeaderTemplate" type="text/x-template">
+        <span class="header-icon">📅 Join Date</span>
+    </script>
+    
+    <script id="salaryHeaderTemplate" type="text/x-template">
+        <span class="header-icon">💰 Salary</span>
+    </script>
+
+    <script id="attendanceHeaderTemplate" type="text/x-template">
+        <span class="header-icon">✅ Attendance</span>
+    </script>
+
+    <script id="leaveCountHeaderTemplate" type="text/x-template">
+        <span class="header-icon">🧾 Leave Count</span>
+    </script>
+
+    <script id="projectHeaderTemplate" type="text/x-template">
+        <span class="header-icon">📁 Project</span>
+    </script>
+
+    <script id="projectStatusHeaderTemplate" type="text/x-template">
+        <span class="header-icon">📊 Status</span>
+    </script>
+
+    <script id="statusHeaderTemplate" type="text/x-template">
+        <span class="header-icon">🟢 Live Status</span>
+    </script>
+
+    <div class="viewer-container">
+        <label for="viewer" class="viewer-label">Select Viewer Role:</label>
+        <input id="viewer" />
+    </div>
+
+    <div id="TreeGrid"></div>
+
+    <script src="bundle.js"></script>
+</body>
+
+</html>
+
+<!-- <!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8" />
+
+    <link href="https://cdn.syncfusion.com/ej2/29.1.33/tailwind3-dark.css" rel="stylesheet">
+    <script src="https://cdn.polyfill.io/v2/polyfill.min.js"></script>
+
+    <style>
+        .status {
+            color: rgb(255, 253, 240);
+            padding: 4px 10px;
+            border-radius: 7px;
+            font-size: 12px;
+        }
+    </style>
+</head>
+
+<body>
+    <script id="employeetemplate" type="text/x-template">
+        <td class="border" style="padding: 8px 10px;">
+            <div style="display: flex; align-items: center;">
+                <img src="../demo/images/${FullName}.png" alt="${FullName}" width="30" height="30" style="border-radius: 50%; margin-right: 10px;" />
+                <div style="display: flex; flex-direction: column;">
+                    <span style="font-size: 14px; font-weight: 500;">${Employee}</span>
+                    <span style="font-size: 10px; color: gray;">${JobTitle}</span>
+                </div>
+            </div>
+        </td>
+    </script>
+
+    <script id="flagtemplate" type="text/x-template">
+        <div class="image" style="display:inline-block">
+            <img src="https://ej2.syncfusion.com/demos/src/tree-grid/images/${Location}.png" class="e-image" alt="${name}" style="width: 20px; height: 15px; vertical-align: middle;"/>
+        </div>
+        <div style="display:inline-block; padding-left:4px; vertical-align: middle">${Location}</div>
+    </script>
+
+    <script id="emailtemplate" type="text/x-template">
+        <td class="border" style="padding: 8px 10px;">
+            <a href="mailto:${Email}" style="text-decoration: none; color: #0078D7; font-size: 13px; background-color: #f3f2f1; padding: 4px 8px; font-family: Arial, Helvetica, sans-serif;">
+                ✉
+            </a>
+        </td>
+    </script>
+
+    <script id="statustemplate" type="text/x-template">
+        <td class="border" style="padding: 8px 10px;">
+            <span class="status" style="background-color: ${StatusColor};">
+                ${Status}
+            </span>
+        </td>
+    </script>
+
+    <script id="contactHeaderTemplate" type="text/x-template">
+        <span>📞 Contact</span>
+    </script>
+
+    <script id="emailHeaderTemplate" type="text/x-template">
+        <span style="justify-content: center;">✉ Email</span>
+    </script>
+
+    <script id="ageHeaderTemplate" type="text/x-template">
+        <span>👶 Age</span>
+    </script>
+    
+    <script id="workModeHeaderTemplate" type="text/x-template">
+        <span>🛠️ Work Mode</span>
+    </script>
+
+    <script id="idHeaderTemplate" type="text/x-template">
+        <span># ID</span>
+    </script>
+
+    <script id="employeeHeaderTemplate" type="text/x-template">
+        <span>👤 Employee</span>
+    </script>
+
+    <script id="departmentHeaderTemplate" type="text/x-template">
+        <span>💼 Department</span>
+    </script>
+
+    <script id="locationHeaderTemplate" type="text/x-template">
+        <span>📍 Location</span>
+    </script>
+
+    <script id="joinDateHeaderTemplate" type="text/x-template">
+        <span>📅 Join Date</span>
+    </script>
+    
+    <script id="salaryHeaderTemplate" type="text/x-template">
+        <span>💰 Salary</span>
+    </script>
+
+    <script id="attendanceHeaderTemplate" type="text/x-template">
+        <span>✅ Attendance</span>
+    </script>
+
+    <script id="leaveCountHeaderTemplate" type="text/x-template">
+        <span>🧾 Leave Count</span>
+    </script>
+
+    <script id="projectHeaderTemplate" type="text/x-template">
+        <span>📁 Project</span>
+    </script>
+
+    <script id="projectStatusHeaderTemplate" type="text/x-template">
+        <span>📊 Status</span>
+    </script>
+
+    <script id="statusHeaderTemplate" type="text/x-template">
+        <span>🟢 Live Status</span>
+    </script>
+
+    <div style="margin: 10px">        
+        <label for="viewer" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Select Viewer Role:</label>
+        <input id="viewer" />
+    </div>
+
+    <div id="TreeGrid"></div>
+
+    <script src="bundle.js"></script>
+</body>
+
+</html> -->
