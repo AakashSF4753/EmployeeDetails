@@ -402,6 +402,7 @@ let employeeData = [
 ];
 
 var tree;
+const currentYear = new Date().getFullYear();
 
 function getColumns(viewer) {
     let baseColumns = [
@@ -429,8 +430,8 @@ function getColumns(viewer) {
         case 'helpdesk':
             return [
                 ...baseColumns,
-                { field: 'leaveCount', headerText: 'Leave Taken', textAlign: 'Right', width: 120 },
                 { field: 'attendance', headerText: 'Attendance', textAlign: 'Right', width: 120 },
+                { field: 'leaveCount', headerText: 'Leave Taken ${currentYear}', textAlign: 'Right', width: 120 },
                 { template: '#leaveAvailabilityTemplate', headerText: 'Leave Availability', width: 240 },
             ];
         case 'pm':
