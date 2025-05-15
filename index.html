@@ -11,11 +11,77 @@
     <script src="https://cdn.syncfusion.com/ej2/syncfusion-helper.js" type="text/javascript"></script>
 
     <style>
-        .status {
-            color: rgb(255, 253, 240);
-            padding: 4px 10px;
-            border-radius: 7px;
-            font-size: 12px;
+        @font-face {
+            font-family: 'ej2-headertemplate';
+            src:
+                url(data:application/x-font-ttf;charset=utf-8;base64,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) format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }
+        
+        .header-icon {
+            display: inline-flex;
+            align-items: center;
+        }
+        
+        .e-mail:before {
+            font-family: 'icon';
+            content: "\e700";
+        }
+
+        .e-icon-userlogin:before {
+            font-family: 'ej2-headertemplate';
+            content: "\e702";
+        }
+
+        .e-icon-location:before {
+            content: "\e30c";
+        }
+
+        .e-icon-calender::before {
+            font-family: 'ej2-headertemplate';
+            content: "\e960";
+        }
+
+        #TreeGrid .e-mail,
+        #TreeGrid .e-icon-userlogin,
+        #TreeGrid .e-location,
+        #TreeGrid .e-icon-calender {
+            margin-right: 5px;
+        }
+
+        /* Light Themes */
+        .tailwind,
+        .tailwind3,
+        .bootstrap,
+        .bootstrap4,
+        .bootstrap5,
+        .fluent,
+        .fluent2,
+        .fluent2-highcontrast,
+        .highcontrast,
+        .material,
+        .material3,
+        .fabric {
+            --email-bg: #e2e2e2;
+            --email-color: #0078D7;
+            --employee-title-color: gray;
+        }
+
+        .tailwind .email-link,
+        .tailwind3 .email-link,
+        .bootstrap .email-link,
+        .bootstrap4 .email-link,
+        .bootstrap5 .email-link,
+        .fluent .email-link,
+        .fluent2 .email-link,
+        .fluent2-highcontrast .email-link,
+        .highcontrast .email-link,
+        .material .email-link,
+        .material3 .email-link,
+        .fabric .email-link {
+            background-color: var(--email-bg);
+            color: var(--email-color);
         }
 
         .employee-cell {
@@ -46,7 +112,7 @@
 
         .employee-title {
             font-size: 10px;
-            color: gray;
+            color: var(--employee-title-color);
         }
 
         .flag-container {
@@ -71,20 +137,9 @@
 
         .email-link {
             text-decoration: none;
-            color: #0078D7;
             font-size: 13px;
-            background-color: #f3f2f1;
             padding: 4px 8px;
             font-family: Arial, Helvetica, sans-serif;
-        }
-
-        .status-cell {
-            padding: 8px 10px;
-        }
-
-        .header-icon {
-            display: inline-flex;
-            align-items: center;
         }
 
         .viewer-label {
@@ -94,14 +149,60 @@
         .viewer-container {
             margin: 10px;
         }
+
+        /* Dark Themes */
+        .tailwind-dark .email-link,
+        .tailwind3-dark .email-link,
+        .bootstrap-dark .email-link,
+        .bootstrap5-dark .email-link,
+        .fluent-dark .email-link,
+        .fluent2-dark .email-link,
+        .material-dark .email-link,
+        .material3-dark .email-link,
+        .fabric-dark .email-link {
+            background-color: #2c2c2c;
+            color: #66b2ff;
+        }
+
+        .tailwind-dark .employee-title,
+        .tailwind3-dark .employee-title,
+        .bootstrap-dark .employee-title,
+        .bootstrap5-dark .employee-title,
+        .fluent-dark .employee-title,
+        .fluent2-dark .employee-title,
+        .material-dark .employee-title,
+        .material3-dark .employee-title,
+        .fabric-dark .employee-title {
+            color: lightgray;
+        }
     </style>
 </head>
 
 <body>
+    <script id="employeeHeaderTemplate" type="text/x-template">
+        <span class="e-icon-userlogin e-icons employee header-icon"></span>
+        Employee
+    </script>
+
+    <script id="emailHeaderTemplate" type="text/x-template">
+        <span class="e-mail e-icons mail header-icon"></span>
+        Email ID
+    </script>
+
+    <script id="locationHeaderTemplate" type="text/x-template">
+        <span class="e-location e-icons location header-icon"></span>
+        Location
+    </script>
+
+    <script id="joinDateHeaderTemplate" type="text/x-template">
+        <span class="e-icon-calender e-icons calender"></span>
+        Join Date
+    </script>
+
     <script id="employeetemplate" type="text/x-template">
         <td class="employee-cell border">
             <div class="employee-content">
-                <img src="./images/${FullName}.png" alt="${FullName}" class="employee-img" />
+                <img src="../demo/images/${FullName}.png" alt="${FullName}" class="employee-img" />
                 <div class="employee-info">
                     <span class="employee-name">${Employee}</span>
                     <span class="employee-title">${JobTitle}</span>
@@ -119,74 +220,8 @@
 
     <script id="emailtemplate" type="text/x-template">
         <td class="email-cell border">
-            <a href="mailto:${Email}" class="email-link">✉</a>
+            <a href="mailto:${Email}" class="email-link">${Email}</a>
         </td>
-    </script>
-
-    <script id="statustemplate" type="text/x-template">
-        <td class="status-cell border">
-            <span class="status" style="background-color: ${StatusColor};">${Status}</span>
-        </td>
-    </script>
-
-    <script id="contactHeaderTemplate" type="text/x-template">
-        <span class="header-icon">📞 Contact</span>
-    </script>
-
-    <script id="emailHeaderTemplate" type="text/x-template">
-        <span class="header-icon">✉ Email</span>
-    </script>
-
-    <script id="ageHeaderTemplate" type="text/x-template">
-        <span class="header-icon">👶 Age</span>
-    </script>
-    
-    <script id="workModeHeaderTemplate" type="text/x-template">
-        <span class="header-icon">🛠️ Work Mode</span>
-    </script>
-
-    <script id="idHeaderTemplate" type="text/x-template">
-        <span class="header-icon"># ID</span>
-    </script>
-
-    <script id="employeeHeaderTemplate" type="text/x-template">
-        <span class="header-icon">👤 Employee</span>
-    </script>
-
-    <script id="departmentHeaderTemplate" type="text/x-template">
-        <span class="header-icon">💼 Department</span>
-    </script>
-
-    <script id="locationHeaderTemplate" type="text/x-template">
-        <span class="header-icon">📍 Location</span>
-    </script>
-
-    <script id="joinDateHeaderTemplate" type="text/x-template">
-        <span class="header-icon">📅 Join Date</span>
-    </script>
-    
-    <script id="salaryHeaderTemplate" type="text/x-template">
-        <span class="header-icon">💰 Salary</span>
-    </script>
-
-    <script id="attendanceHeaderTemplate" type="text/x-template">
-        <span class="header-icon">✅ Attendance</span>
-    </script>
-
-    <script id="leaveCountHeaderTemplate" type="text/x-template">
-        <span class="header-icon">🧾 Leave Count</span>
-    </script>
-
-    <script id="projectHeaderTemplate" type="text/x-template">
-        <span class="header-icon">📁 Project</span>
-    </script>
-
-    <script id="projectStatusHeaderTemplate" type="text/x-template">
-        <span class="header-icon">📊 Status</span>
-    </script>
-
-    <script id="statusHeaderTemplate" type="text/x-template">
-        <span class="header-icon">🟢 Live Status</span>
     </script>
 
     <div class="viewer-container">

@@ -1,4 +1,4 @@
-ej.treegrid.TreeGrid.Inject(ej.treegrid.Page, ej.treegrid.Freeze);
+ej.treegrid.TreeGrid.Inject(ej.treegrid.Page, ej.treegrid.Freeze, ej.treegrid.Sort, ej.treegrid.Filter);
 let employeeData = [
     {
         "ID": "EMP001",
@@ -30,7 +30,7 @@ let employeeData = [
                 "Location": "Bangladesh",
                 "JoinDate": new Date('2018-04-23'),
                 "Salary": 150000,
-                "Status": "Busy",
+                "Status": "Available",
                 "Email": 'romeywilson@gmail.com',
                 "contact": '9876543210',
                 "attendance": '88%',
@@ -52,7 +52,7 @@ let employeeData = [
                         "Location": "Germany",
                         "JoinDate": new Date('2018-04-23'),
                         "Salary": 100000,
-                        "Status": "Away",
+                        "Status": "Leave",
                         "Email": 'robertking@gmail.com',
                         "contact": '5551112233',
                         "attendance": '98%',
@@ -122,7 +122,7 @@ let employeeData = [
                 "Location": "Greece",
                 "JoinDate": new Date('2018-04-23'),
                 "Salary": 170000,
-                "Status": "Away",
+                "Status": "Leave",
                 "Email": 'davidwilliam@gmail.com',
                 "contact": '5551112233',
                 "attendance": '98%',
@@ -144,7 +144,7 @@ let employeeData = [
                         "Location": "USA",
                         "JoinDate": new Date('2018-04-23'),
                         "Salary": 120000,
-                        "Status": "Offline",
+                        "Status": "Available",
                         "Email": 'janetleverling@gmail.com',
                         "contact": '5551112233',
                         "attendance": '98%',
@@ -166,7 +166,7 @@ let employeeData = [
                                 "Location": "Bangladesh",
                                 "JoinDate": new Date('2018-04-23'),
                                 "Salary": 80000,
-                                "Status": "Be Right Back",
+                                "Status": "Leave",
                                 "Email": 'lauracallahan@gmail.com',
                                 "contact": '5551112233',
                                 "attendance": '98%',
@@ -188,7 +188,7 @@ let employeeData = [
                                 "Location": "Germany",
                                 "JoinDate": new Date('2018-04-23'),
                                 "Salary": 75000,
-                                "Status": "Do Not Disturb",
+                                "Status": "Available",
                                 "Email": 'margaretpeacock@gmail.com',
                                 "contact": '5551112233',
                                 "attendance": '98%',
@@ -254,7 +254,7 @@ let employeeData = [
                                 "Location": "Greece",
                                 "JoinDate": new Date('2018-04-23'),
                                 "Salary": 85000,
-                                "Status": "Busy",
+                                "Status": "Available",
                                 "Email": 'stevenbuchanan@gmail.com',
                                 "contact": '5551112233',
                                 "attendance": '98%',
@@ -274,7 +274,7 @@ let employeeData = [
                                 "Location": "USA",
                                 "JoinDate": new Date('2018-04-23'),
                                 "Salary": 60000,
-                                "Status": "Offline",
+                                "Status": "Leave",
                                 "Email": 'janetleverling@gmail.com',
                                 "contact": '5551112233',
                                 "attendance": '98%',
@@ -320,7 +320,7 @@ let employeeData = [
                         "Location": "Germany",
                         "JoinDate": new Date('2018-04-23'),
                         "Salary": 105000,
-                        "Status": "Be Right Back",
+                        "Status": "Leave",
                         "Email": 'romeywilson@gmail.com',
                         "contact": '5551112233',
                         "attendance": '98%',
@@ -342,7 +342,7 @@ let employeeData = [
                                 "Location": "Canada",
                                 "JoinDate": new Date('2018-04-23'),
                                 "Salary": 70000,
-                                "Status": "Busy",
+                                "Status": "Available",
                                 "Email": 'nancydavolio@gmail.com',
                                 "contact": '5551112233',
                                 "attendance": '98%',
@@ -384,73 +384,49 @@ let employeeData = [
     }
 ];
 
-var statusInterval = null;
-
-var statusOptions = ['Available', 'Busy', 'Be Right Back', 'Do Not Disturb', 'Away', 'Offline'];
-var statusColors = {
-    'Available': '#00a623',
-    'Be Right Back': '#a68e00',
-    'Busy': '#a61300',
-    'Do Not Disturb': '#a61300',
-    'Away': '#e2c800',
-    'Offline': 'gray'
-};
-
-function updateStatusRandomly(data) {
-    for (var i = 0; i < data.length; i++) {
-        var item = data[i];
-        item.Status = statusOptions[Math.floor(Math.random() * statusOptions.length)];
-        item.StatusColor = statusColors[item.Status];
-        if (item.Children) updateStatusRandomly(item.Children);
-    }
-}
-
 var tree;
 
 function getColumns(viewer) {
-    var baseColumns = [
-        { field: 'ID', headerTemplate: '#idHeaderTemplate', width: 80, textAlign: 'Left' },
+    let baseColumns = [
+        { field: 'ID', headerText: 'ID', width: 80, textAlign: 'Left' },
         { template: '#employeetemplate', headerTemplate: '#employeeHeaderTemplate', width: 150 },
-        { field: 'Department', headerTemplate: '#departmentHeaderTemplate', width: 150 },
+        { field: 'Department', headerText: 'Department', width: 150 },
     ];
 
-    if (viewer === 'hr') {
-        return baseColumns.concat([
-            { template: '#flagtemplate', headerTemplate: '#locationHeaderTemplate', width: 120 },
-            { field: 'JoinDate', headerTemplate: '#joinDateHeaderTemplate', textAlign: 'Right', width: 120, format: { skeleton: 'yMd', type: 'date' } },
-            { field: 'Salary', headerTemplate: '#salaryHeaderTemplate', format: 'c2', textAlign: 'Right', width: 120 },
-            { template: '#emailtemplate', headerTemplate: '#emailHeaderTemplate', textAlign: 'Center', width: 150 },
-        ]);
-    } else if (viewer === 'employee') {
-        return baseColumns.concat([
-            { field: 'Age', headerTemplate: '#ageHeaderTemplate', textAlign: 'Right', width: 80 },
-            { field: 'WorkMode', headerTemplate: '#workModeHeaderTemplate', textAlign: 'Right', width: 120 },
-            { template: '#emailtemplate', headerTemplate: '#emailHeaderTemplate', textAlign: 'Center', width: 100 },
-        ]);
-    } else if (viewer === 'frontoffice') {
-        return baseColumns.concat([
-            { field: 'leaveCount', headerTemplate: '#leaveCountHeaderTemplate', textAlign: 'Right', width: 120 },
-            { field: 'attendance', headerTemplate: '#attendanceHeaderTemplate', textAlign: 'Right', width: 120 },
-            { template: '#statustemplate', headerTemplate: '#statusHeaderTemplate', width: 120 },
-        ]);
-    } else if (viewer === 'pm') {
-        return baseColumns.concat([
-            { field: 'projectDetails', headerTemplate: '#projectHeaderTemplate', width: 150 },
-            { field: 'projectStatus', headerTemplate: '#projectStatusHeaderTemplate', width: 120 },
-        ]);
-    } else {
-        return baseColumns;
+    switch (viewer) {
+        case 'hr':
+            return [
+                ...baseColumns,
+                { template: '#flagtemplate', headerTemplate: '#locationHeaderTemplate', width: 120 },
+                { field: 'JoinDate', headerTemplate: '#joinDateHeaderTemplate', textAlign: 'Right', width: 120, format: { skeleton: 'yMd', type: 'date' } },
+                { field: 'Salary', headerText: 'Salary', format: 'c2', textAlign: 'Right', width: 120 },
+                { template: '#emailtemplate', headerTemplate: '#emailHeaderTemplate', textAlign: 'Center', width: 150 },
+            ];
+        case 'employee':
+            return [
+                ...baseColumns,
+                { field: 'Age', headerText: 'Age', textAlign: 'Right', width: 80 },
+                { field: 'WorkMode', headerText: 'Work Mode', textAlign: 'Right', width: 120 },
+                { template: '#emailtemplate', headerTemplate: '#emailHeaderTemplate', textAlign: 'Center', width: 100 },
+            ];
+        case 'helpdesk':
+            return [
+                ...baseColumns,
+                { field: 'leaveCount', headerText: 'Leave Taken', textAlign: 'Right', width: 120 },
+                { field: 'attendance', headerText: 'Attendance', textAlign: 'Right', width: 120 },
+            ];
+        case 'pm':
+            return [
+                ...baseColumns,
+                { field: 'projectDetails', headerText: 'Project', width: 150 },
+                { field: 'projectStatus', headerText: 'Project Status', width: 120 },
+            ];
+        default:
+            return baseColumns;
     }
 }
 
 function initTreeGrid(viewer) {
-    if (statusInterval) {
-        clearInterval(statusInterval);
-        statusInterval = null;
-    }
-
-    updateStatusRandomly(employeeData);
-
     if (tree) {
         tree.columns = getColumns(viewer);
         tree.refreshColumns();
@@ -462,18 +438,18 @@ function initTreeGrid(viewer) {
             columns: getColumns(viewer),
             height: 400,
             allowPaging: true,
+            allowSorting: true,
+            allowFiltering: true,
+            filterSettings: {
+                type: 'Menu',
+                hierarchyMode: 'Child',
+                mode: 'Immediate',
+            },
             enableHover: true,
             pageSettings: { pageSize: 10 },
             gridLines: 'Both',
         });
         tree.appendTo('#TreeGrid');
-    }
-
-    if (viewer === 'frontoffice') {
-        statusInterval = setInterval(function () {
-            updateStatusRandomly(employeeData);
-            tree.refresh();
-        }, 3000);
     }
 }
 
@@ -487,7 +463,7 @@ initTreeGrid('hr');
 var viewerRoles = [
     { id: 'hr', role: 'HR' },
     { id: 'employee', role: 'Employee' },
-    { id: 'frontoffice', role: 'Front Office' },
+    { id: 'helpdesk', role: 'Help Desk' },
     { id: 'pm', role: 'Project Manager' }
 ];
 
