@@ -405,7 +405,7 @@ function getColumns(viewer) {
         case 'employee':
             return [
                 ...baseColumns,
-                { field: 'Age', headerText: 'Age', textAlign: 'Right', width: 80 },
+                { field: 'Status', headerText: 'Presence', width: 100 },
                 { field: 'WorkMode', headerText: 'Work Mode', textAlign: 'Right', width: 120 },
                 { template: '#emailtemplate', headerTemplate: '#emailHeaderTemplate', textAlign: 'Center', width: 100 },
             ];
