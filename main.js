@@ -406,38 +406,38 @@ const currentYear = new Date().getFullYear();
 
 function getColumns(viewer) {
     let baseColumns = [
-        { field: 'ID', headerText: 'ID', width: 100, textAlign: 'Left' },
-        { template: '#employeetemplate', headerTemplate: '#employeeHeaderTemplate', width: 150 },
-        { field: 'Department', headerText: 'Department', width: 140 },
+        { field: 'ID', headerText: 'ID', width: 130, minWidth: 30, textAlign: 'Left' },
+        { template: '#employeetemplate', headerTemplate: '#employeeHeaderTemplate', width: 160 },
+        { field: 'Department', headerText: 'Department', width: 130 },
     ];
 
     switch (viewer) {
         case 'hr':
             return [
                 ...baseColumns,
-                { template: '#flagtemplate', headerTemplate: '#locationHeaderTemplate', width: 120 },
-                { field: 'JoinDate', headerTemplate: '#joinDateHeaderTemplate', textAlign: 'Right', width: 120, format: { skeleton: 'yMd', type: 'date' } },
-                { field: 'Salary', headerText: 'Salary', format: 'c2', textAlign: 'Right', width: 120 },
+                { template: '#flagtemplate', headerTemplate: '#locationHeaderTemplate', width: 110 },
+                { field: 'JoinDate', headerTemplate: '#joinDateHeaderTemplate', textAlign: 'Right', width: 110, format: { skeleton: 'yMd', type: 'date' } },
+                { field: 'Salary', headerText: 'Salary', format: 'c2', textAlign: 'Right', width: 110 },
                 { template: '#emailtemplate', headerTemplate: '#emailHeaderTemplate', textAlign: 'Center', width: 150 },
             ];
         case 'employee':
             return [
                 ...baseColumns,
                 { field: 'Status', headerText: 'Presence', width: 100 },
-                { field: 'WorkMode', headerText: 'Work Mode', textAlign: 'Right', width: 120 },
-                { template: '#emailtemplate', headerTemplate: '#emailHeaderTemplate', textAlign: 'Center', width: 100 },
+                { field: 'WorkMode', headerText: 'Work Mode', textAlign: 'Right', width: 100 },
+                { template: '#emailtemplate', headerTemplate: '#emailHeaderTemplate', textAlign: 'Center', width: 150 },
             ];
         case 'helpdesk':
             return [
                 ...baseColumns,
-                { field: 'leaveCount', headerTemplate: '#leaveCountHeaderTemplate', textAlign: 'Right', width: 140 },
-                { template: '#leaveAvailabilityTemplate', headerText: 'Leave Availability', width: 200 },
+                { field: 'leaveCount', headerTemplate: '#leaveCountHeaderTemplate', textAlign: 'Right', width: 120 },
+                { template: '#leaveAvailabilityTemplate', headerText: 'Leave Availability', textAlign: 'Center', width: 200 },
                 { field: 'attendance', headerText: 'Attendance', textAlign: 'Right', width: 120 },
             ];
         case 'pm':
             return [
                 ...baseColumns,
-                { field: 'projectDetails', headerText: 'Project', width: 150 },
+                { field: 'projectDetails', headerText: 'Project', width: 120 },
                 { field: 'projectStatus', headerText: 'Project Status', width: 120 },
             ];
         default:
@@ -469,9 +469,9 @@ function initTreeGrid(viewer) {
             gridLines: 'Both',
             dataBound: function () {
                 const leaveYearSpan = document.getElementById('leaveYear');
-                    if (leaveYearSpan) {
-                        leaveYearSpan.textContent = new Date().getFullYear();
-                    }
+                if (leaveYearSpan) {
+                    leaveYearSpan.textContent = new Date().getFullYear();
+                }
             }
         });
         tree.appendTo('#TreeGrid');
