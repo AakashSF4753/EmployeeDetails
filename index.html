@@ -23,15 +23,15 @@
             display: inline-flex;
             align-items: center;
         }
-        
-        .e-mail:before {
-            font-family: 'icon';
-            content: "\e700";
-        }
 
         .e-icon-userlogin:before {
             font-family: 'ej2-headertemplate';
             content: "\e702";
+        }
+
+        .e-mail:before {
+            font-family: 'icon';
+            content: "\e700";
         }
 
         .e-icon-location:before {
@@ -139,7 +139,6 @@
             text-decoration: none;
             font-size: 13px;
             padding: 4px 8px;
-            font-family: Arial, Helvetica, sans-serif;
         }
 
         .viewer-label {
@@ -200,7 +199,7 @@
     </script>
 
     <script id="employeetemplate" type="text/x-template">
-        <td class="employee-cell border">
+        <td class="employee-cell">
             <div class="employee-content">
                 <img src="./images/${FullName}.png" alt="${FullName}" class="employee-img" />
                 <div class="employee-info">
@@ -219,7 +218,7 @@
     </script>
 
     <script id="emailtemplate" type="text/x-template">
-        <td class="email-cell border">
+        <td class="email-cell">
             <a href="mailto:${Email}" class="email-link">${Email}</a>
         </td>
     </script>

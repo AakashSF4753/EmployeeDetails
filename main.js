@@ -390,7 +390,7 @@ function getColumns(viewer) {
     let baseColumns = [
         { field: 'ID', headerText: 'ID', width: 100, textAlign: 'Left' },
         { template: '#employeetemplate', headerTemplate: '#employeeHeaderTemplate', width: 150 },
-        { field: 'Department', headerText: 'Department', width: 150 },
+        { field: 'Department', headerText: 'Department', width: 140 },
     ];
 
     switch (viewer) {
