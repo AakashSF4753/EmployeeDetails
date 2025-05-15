@@ -415,8 +415,8 @@ function getColumns(viewer) {
         case 'hr':
             return [
                 ...baseColumns,
-                { template: '#flagtemplate', headerTemplate: '#locationHeaderTemplate', width: 110 },
-                { field: 'JoinDate', headerTemplate: '#joinDateHeaderTemplate', textAlign: 'Right', width: 110, format: { skeleton: 'yMd', type: 'date' } },
+                { template: '#flagtemplate', headerTemplate: '#locationHeaderTemplate', width: 120 },
+                { field: 'JoinDate', headerTemplate: '#joinDateHeaderTemplate', textAlign: 'Right', width: 100, format: { skeleton: 'yMd', type: 'date' } },
                 { field: 'Salary', headerText: 'Salary', format: 'c2', textAlign: 'Right', width: 110 },
                 { template: '#emailtemplate', headerTemplate: '#emailHeaderTemplate', textAlign: 'Center', width: 150 },
             ];
