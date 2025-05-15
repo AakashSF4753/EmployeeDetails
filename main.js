@@ -431,7 +431,7 @@ function getColumns(viewer) {
             return [
                 ...baseColumns,
                 { field: 'attendance', headerText: 'Attendance', textAlign: 'Right', width: 120 },
-                { field: 'leaveCount', headerText: 'Leave Taken ${currentYear}', textAlign: 'Right', width: 120 },
+                { field: 'leaveCount', headerTemplate: '#leaveCountHeaderTemplate', textAlign: 'Right', width: 120 },
                 { template: '#leaveAvailabilityTemplate', headerText: 'Leave Availability', width: 240 },
             ];
         case 'pm':
@@ -467,6 +467,12 @@ function initTreeGrid(viewer) {
             enableHover: true,
             pageSettings: { pageSize: 10 },
             gridLines: 'Both',
+            dataBound: function () {
+                const leaveYearSpan = document.getElementById('leaveYear');
+                    if (leaveYearSpan) {
+                        leaveYearSpan.textContent = new Date().getFullYear();
+                    }
+            }
         });
         tree.appendTo('#TreeGrid');
     }
