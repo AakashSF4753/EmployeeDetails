@@ -430,9 +430,9 @@ function getColumns(viewer) {
         case 'helpdesk':
             return [
                 ...baseColumns,
-                { field: 'attendance', headerText: 'Attendance', textAlign: 'Right', width: 120 },
                 { field: 'leaveCount', headerTemplate: '#leaveCountHeaderTemplate', textAlign: 'Right', width: 120 },
                 { template: '#leaveAvailabilityTemplate', headerText: 'Leave Availability', width: 240 },
+                { field: 'attendance', headerText: 'Attendance', textAlign: 'Right', width: 120 },
             ];
         case 'pm':
             return [
